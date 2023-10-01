@@ -6,39 +6,49 @@ namespace Script
 {
     public class PlayerInput : MonoBehaviour
     {
-        private Movement _move;
+        [SerializeField] private Movement _move;
 
-        public void Awake()
+        private void Awake()
         {
-            _move = GetComponent<Movement>();
+            if (_move == null)
+            {
+                _move = GetComponent<Movement>();
+            }
         }
 
-        // handle user input
-        public void Update()
+        private void Update()
         {
-            // handle player go left or right, press shift key will speed up
-            Vector3 v3 = Vector3.zero;
+            HandleMovementInput();
+            HandleJumpInput();
+        }
+
+        private void HandleMovementInput()
+        {
+            Vector3 moveDirection = Vector3.zero;
 
             if (Input.GetKey(KeyCode.A))
-                v3.x -= 1;
+                moveDirection.x -= 1;
             if (Input.GetKey(KeyCode.D))
-                v3.x += 1;
-            if ((Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
-                _move.moveSpeed = 4f;
-            else
-                _move.moveSpeed = 2f;
+                moveDirection.x += 1;
 
-            // normalize move speed
-            if (v3.magnitude > 1)
-                v3.Normalize();
+            // Check for running
+            new MoveCommand(_move, moveDirection, IsRunning()).Execute();
 
-            new MoveCommand(_move, v3).Execute();
+            // Normalize move direction
+            if (moveDirection.magnitude > 1)
+                moveDirection.Normalize();
+        }
 
-            // handle player jump and crouch
-            // TODO: need add crouch function
+        private bool IsRunning()
+        {
+            return (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) &&
+                   (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D));
+        }
+
+        private void HandleJumpInput()
+        {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
             {
-                _move.jumpForce = 10f;
                 new JumpCommand(_move).Execute();
             }
         }

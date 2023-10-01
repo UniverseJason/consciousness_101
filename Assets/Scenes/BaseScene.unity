@@ -212,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5bd884892f9cbf43b326470f8cd987b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _move: {fileID: 32530864}
 --- !u!114 &32530864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -224,9 +225,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3536822fa0474276bfad00d7acbe83ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 2
+  runSpeed: 4
+  jumpForce: 15
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+  groundCheckOffset: {x: 0, y: -0.5, z: 0}
+  groundCheckRadius: 0.5
   body: {fileID: 32530867}
   animationStateChanger: {fileID: 32530868}
   animationDefaultStateName: Test Character Idle
