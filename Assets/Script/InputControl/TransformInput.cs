@@ -1,25 +1,35 @@
+using JetBrains.Annotations;
 using Script.Command;
 using Script.ActionSystem;
 using UnityEngine;
 
-namespace Script
+namespace Script.InputControl
 {
-    public class PlayerInput : MonoBehaviour
+    public class TransformInput : MonoBehaviour
     {
+        [SerializeField] public bool EnablePlayerControl;
         [SerializeField] private Movement _move;
+        [SerializeField] [CanBeNull] private Jump _jump;
 
         private void Awake()
         {
-            if (_move == null)
-            {
-                _move = GetComponent<Movement>();
-            }
+            _move = GetComponent<Movement>();
+            _jump = GetComponent<Jump>();
         }
 
         private void Update()
         {
-            HandleMovementInput();
-            HandleJumpInput();
+            if (EnablePlayerControl)
+            {
+                HandleMovementInput();
+                HandleJumpInput();
+            }
+        }
+
+        public bool IsRunning()
+        {
+            return (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) &&
+                   (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D));
         }
 
         private void HandleMovementInput()
@@ -39,17 +49,11 @@ namespace Script
                 moveDirection.Normalize();
         }
 
-        private bool IsRunning()
-        {
-            return (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) &&
-                   (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D));
-        }
-
         private void HandleJumpInput()
         {
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
             {
-                new JumpCommand(_move).Execute();
+                new JumpCommand(_jump).Execute();
             }
         }
     }

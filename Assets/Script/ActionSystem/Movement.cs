@@ -1,9 +1,4 @@
-﻿/*
- * This class implement the character move, running, and jumping
- * with corresponding animation
- */
-
-using Script.Animation;
+﻿using Script.Animation;
 using UnityEngine;
 
 namespace Script.ActionSystem
@@ -11,48 +6,64 @@ namespace Script.ActionSystem
     public class Movement : MonoBehaviour
     {
         // player movement management
-        [SerializeField] private float moveSpeed = 2f;
-        [SerializeField] private float runSpeed = 4f;
+        [SerializeField] public bool enableMovement = true;
+        [SerializeField] private float moveSpeed;
 
-        // player jump management
-        [SerializeField] private float jumpForce = 13f;
-        [SerializeField] private LayerMask groundMask;
-        [SerializeField] private Vector3 groundCheckOffset = new Vector3(0, -0.5f, 0);
-        [SerializeField] private float groundCheckRadius = 0.5f;
+        public float MoveSpeed
+        {
+            get { return moveSpeed; }
+            set { moveSpeed = value; }
+        }
+
+        [SerializeField] private float runSpeed;
+
+        public float RunSpeed
+        {
+            get { return runSpeed; }
+            set { moveSpeed = value; }
+        }
 
         // movement animation state
-        [SerializeField] private Transform body;
         [SerializeField] private AnimationStateChanger animationStateChanger;
         [SerializeField] private string animationDefaultStateName = "null";
         [SerializeField] private string animationMoveStateName = "null";
         [SerializeField] private string animationRunStateName = "null";
 
+        // control the Rigidbody2D movement
         private Rigidbody2D rb2d;
+
+        private Vector3 originalLocalScale;
 
         private void Awake()
         {
             rb2d = GetComponent<Rigidbody2D>();
+            originalLocalScale = transform.localScale;
         }
 
+        // move the Rigidbody2D
         public void MoveRb(Vector3 v3, bool enableAnimation, bool isRunning)
         {
-            if (isRunning)
-                v3 *= runSpeed;
-            else
-                v3 *= moveSpeed;
-
-            v3.y = rb2d.velocity.y;
-            rb2d.velocity = v3;
-
-            // Flip body based on movement direction
-            if (v3.x != 0)
+            if (enableMovement)
             {
-                float direction = Mathf.Sign(v3.x);
-                body.localScale = new Vector3(2 * direction, 2, 0);
-            }
+                if (isRunning)
+                    v3 *= runSpeed;
+                else
+                    v3 *= moveSpeed;
 
-            // Handle move and run animations
-            HandleMoveAnimations(v3, enableAnimation, isRunning);
+                v3.y = rb2d.velocity.y;
+                rb2d.velocity = v3;
+
+                // Flip body based on movement direction
+                if (v3.x != 0)
+                {
+                    float direction = Mathf.Sign(v3.x);
+                    Vector3 newScale = new Vector3(originalLocalScale.x * direction, originalLocalScale.y, originalLocalScale.z);
+                    transform.localScale = newScale;
+                }
+
+                // Handle move and run animations
+                HandleMoveAnimations(v3, enableAnimation, isRunning);
+            }
         }
 
         private void HandleMoveAnimations(Vector3 v3, bool enableAnimation, bool isRunning)
@@ -75,19 +86,6 @@ namespace Script.ActionSystem
             {
                 animationStateChanger.ChangeAnimationState(animationDefaultStateName);
             }
-        }
-
-        public void JumpRB()
-        {
-            if (IsGrounded())
-            {
-                rb2d.AddForce(new Vector3(0, jumpForce, 0), ForceMode2D.Impulse);
-            }
-        }
-
-        private bool IsGrounded()
-        {
-            return Physics2D.OverlapCircleAll(transform.position + groundCheckOffset, groundCheckRadius, groundMask).Length > 0;
         }
     }
 }

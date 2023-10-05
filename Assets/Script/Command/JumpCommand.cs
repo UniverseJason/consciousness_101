@@ -1,20 +1,19 @@
 ﻿using Script.ActionSystem;
-using UnityEngine;
 
 namespace Script.Command
 {
     public class JumpCommand : ICommand
     {
-        private Movement _movementSystem;
+        private Jump _jump;
 
-        public JumpCommand(Movement movementSystem)
+        public JumpCommand(Jump jump)
         {
-            _movementSystem = movementSystem;
+            _jump = jump;
         }
 
         public void Execute()
         {
-            _movementSystem.JumpRB();
+            _jump.JumpRB();
         }
     }
 }
