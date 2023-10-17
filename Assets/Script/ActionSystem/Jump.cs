@@ -5,8 +5,6 @@ namespace Script.ActionSystem
 {
     public class Jump : MonoBehaviour
     {
-        [SerializeField] public bool enableJump = true;
-
         // player jump management
         [SerializeField] private float jumpForce;
         [SerializeField] private LayerMask groundMask;
@@ -27,7 +25,7 @@ namespace Script.ActionSystem
 
         public void JumpRB()
         {
-            if (IsGrounded() && enableJump)
+            if (IsGrounded())
             {
                 rb2d.AddForce(new Vector3(0, jumpForce, 0), ForceMode2D.Impulse);
                 HandleJumpAnimation();

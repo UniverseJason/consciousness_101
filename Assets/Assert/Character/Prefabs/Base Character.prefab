@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3993725444909819197}
   - component: {fileID: 3993998264818004655}
-  - component: {fileID: 504008109765225779}
+  - component: {fileID: 6419246333252677130}
   - component: {fileID: 6868522969227635222}
   - component: {fileID: 2724270384642394044}
+  - component: {fileID: 3142191655638896806}
   - component: {fileID: 3932723425233081864}
   - component: {fileID: 1343679725325374341}
-  - component: {fileID: 6048245246609928236}
   - component: {fileID: 2252291682382416574}
   - component: {fileID: 4460888234723965638}
   m_Layer: 6
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &504008109765225779
+--- !u!61 &6419246333252677130
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,7 +124,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.03279996, y: -0.027792215}
+  m_Offset: {x: -0.021916986, y: -0.026974916}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -135,7 +135,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.37066364, y: 0.6114805}
+  m_Size: {x: 0.4031775, y: 0.60211825}
   m_EdgeRadius: 0
 --- !u!50 &6868522969227635222
 Rigidbody2D:
@@ -185,6 +185,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3142191655638896806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6553002711668344438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6177564b149940b5b388b8c4de0901a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _health: 100
+  _energy: 100
 --- !u!114 &3932723425233081864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,22 +226,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   EnablePlayerControl: 0
+  EnableMovement: 1
   _move: {fileID: 2252291682382416574}
+  _moveDirection: {x: 0, y: 0, z: 0}
+  EnableJump: 1
   _jump: {fileID: 4460888234723965638}
---- !u!114 &6048245246609928236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6553002711668344438}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 254445bb8922437db388e8dcbe11a2db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnableSkill: 0
-  _switchCharacter: {fileID: 0}
 --- !u!114 &2252291682382416574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,9 +243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3536822fa0474276bfad00d7acbe83ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableMovement: 1
   moveSpeed: 1
   runSpeed: 3
+  EnableAnimation: 1
   animationStateChanger: {fileID: 3932723425233081864}
   animationDefaultStateName: Test Character Idle
   animationMoveStateName: Test Character Walk
@@ -259,7 +262,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40a8a6ce6bb2492cbe6a9206aee294bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableJump: 1
   jumpForce: 10
   groundMask:
     serializedVersion: 2

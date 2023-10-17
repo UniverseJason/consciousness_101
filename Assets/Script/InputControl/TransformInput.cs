@@ -7,9 +7,18 @@ namespace Script.InputControl
 {
     public class TransformInput : MonoBehaviour
     {
-        [SerializeField] public bool EnablePlayerControl;
-        [SerializeField] private Movement _move;
-        [SerializeField] [CanBeNull] private Jump _jump;
+        public bool EnablePlayerControl;
+
+        // Movement
+        public bool EnableMovement;
+        public Movement _move;
+        public Vector3 _moveDirection;
+
+        public bool EnableVerticalMovement = false;
+
+        // Jump
+        public bool EnableJump;
+        [CanBeNull] public Jump _jump;
 
         private void Awake()
         {
@@ -21,8 +30,9 @@ namespace Script.InputControl
         {
             if (EnablePlayerControl)
             {
-                HandleMovementInput();
-                HandleJumpInput();
+                if (EnableMovement) HandleMovementInput();
+
+                if (EnableJump) HandleJumpInput();
             }
         }
 
@@ -34,19 +44,27 @@ namespace Script.InputControl
 
         private void HandleMovementInput()
         {
-            Vector3 moveDirection = Vector3.zero;
+            _moveDirection = Vector3.zero;
 
             if (Input.GetKey(KeyCode.A))
-                moveDirection.x -= 1;
+                _moveDirection.x -= 1;
             if (Input.GetKey(KeyCode.D))
-                moveDirection.x += 1;
+                _moveDirection.x += 1;
+
+            if (EnableVerticalMovement)
+            {
+                if (Input.GetKey(KeyCode.W))
+                    _moveDirection.y += 1;
+                if (Input.GetKey(KeyCode.S))
+                    _moveDirection.y -= 1;
+            }
 
             // Check for running
-            new MoveCommand(_move, moveDirection, IsRunning()).Execute();
+            new MoveCommand(_move, _moveDirection, IsRunning()).Execute();
 
             // Normalize move direction
-            if (moveDirection.magnitude > 1)
-                moveDirection.Normalize();
+            if (_moveDirection.magnitude > 1)
+                _moveDirection.Normalize();
         }
 
         private void HandleJumpInput()

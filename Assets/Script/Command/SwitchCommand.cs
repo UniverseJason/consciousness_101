@@ -5,18 +5,18 @@ namespace Script.Command
 {
     public class SwitchCommand : ICommand
     {
-        private SwitchCharacter _switchCharacter;
-        private GameObject _newCharacter;
+        private SwitchObject _switchObject;
+        private GameObject _newObject;
 
-        public SwitchCommand(SwitchCharacter switchCharacter, GameObject newCharacter)
+        public SwitchCommand(SwitchObject switchObject, GameObject newObject)
         {
-            _switchCharacter = switchCharacter;
-            _newCharacter = newCharacter;
+            _switchObject = switchObject;
+            _newObject = newObject;
         }
 
         public void Execute()
         {
-            _switchCharacter.SwitchTo(_newCharacter);
+            _switchObject.SwitchTo(_newObject);
         }
     }
 }

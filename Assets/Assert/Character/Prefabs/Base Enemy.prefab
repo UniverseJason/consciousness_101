@@ -26,11 +26,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3993725444909819197, guid: dc6d4a55e9781494b8a83c37f52e711c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.069
+      value: 0.376
       objectReference: {fileID: 0}
     - target: {fileID: 3993725444909819197, guid: dc6d4a55e9781494b8a83c37f52e711c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.231
+      value: -1.63
       objectReference: {fileID: 0}
     - target: {fileID: 3993725444909819197, guid: dc6d4a55e9781494b8a83c37f52e711c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -81,11 +81,41 @@ PrefabInstance:
       value: Base Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6553002711668344438, guid: dc6d4a55e9781494b8a83c37f52e711c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6553002711668344438, guid: dc6d4a55e9781494b8a83c37f52e711c, type: 3}
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6553002711668344438, guid: dc6d4a55e9781494b8a83c37f52e711c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8642233889265906413}
   m_SourcePrefab: {fileID: 100100000, guid: dc6d4a55e9781494b8a83c37f52e711c, type: 3}
+--- !u!1 &7832754916401465026 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6553002711668344438, guid: dc6d4a55e9781494b8a83c37f52e711c, type: 3}
+  m_PrefabInstance: {fileID: 3910101014646358196}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8642233889265906413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7832754916401465026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f099da98ad6c4a08b9e470198383ee67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 2
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 72
+  PathPoints: []
+  _move: {fileID: 0}
