@@ -1,27 +1,26 @@
-﻿using UnityEngine;
+﻿using Script.Animation;
+using Script.InputControl;
+using UnityEngine;
 
 namespace Script.Role
 {
     public class Character : MonoBehaviour
     {
         [SerializeField] private float _health = 100f;
-        public float Health
-        {
-            get { return _health; }
-            set { _health = value; }
-        }
-
         [SerializeField] private float _energy = 100f;
-        public float Energy
-        {
-            get { return _energy; }
-            set { _energy = value; }
-        }
 
         private GameObject currentCharacter;
 
+        // Animation
+        private TransformInput transInput;
+        private AnimationStateChanger animationStateChanger;
+        private string currentAnimationStateName;
+        [SerializeField] private string takeDamageAnimationStateName = "Test Character Hurt";
+
         private void Awake()
         {
+            transInput = GetComponent<TransformInput>();
+            animationStateChanger = GetComponent<AnimationStateChanger>();
             currentCharacter = gameObject;
         }
 
@@ -36,6 +35,7 @@ namespace Script.Role
         public void TakeDamage(float damage)
         {
             _health -= damage;
+            animationStateChanger.ChangeAnimationState(takeDamageAnimationStateName);
             if (_health <= 0)
             {
                 Die();

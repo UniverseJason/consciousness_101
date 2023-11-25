@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Script.ActionSystem;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Script.UserInterface
 {
