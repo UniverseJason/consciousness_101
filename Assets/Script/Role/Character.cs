@@ -1,5 +1,6 @@
-﻿using Script.Animation;
-using Script.InputControl;
+﻿using Script.ActionSystem;
+using Script.Animation;
+using Script.Command;
 using UnityEngine;
 
 namespace Script.Role
@@ -7,19 +8,23 @@ namespace Script.Role
     public class Character : MonoBehaviour
     {
         [SerializeField] private float _health = 100f;
-        [SerializeField] private float _energy = 100f;
+        public float Health => _health;
 
         private GameObject currentCharacter;
 
         // Animation
-        private TransformInput transInput;
+        private Movement move;
         private AnimationStateChanger animationStateChanger;
         private string currentAnimationStateName;
-        [SerializeField] private string takeDamageAnimationStateName = "Test Character Hurt";
+        [SerializeField] private string takeDamageAnimationStateName;
+
+        // UI Update
+        public delegate void HealthChangedDelegate(float newHealth);
+        public event HealthChangedDelegate OnHealthChanged;
 
         private void Awake()
         {
-            transInput = GetComponent<TransformInput>();
+            move = GetComponent<Movement>();
             animationStateChanger = GetComponent<AnimationStateChanger>();
             currentCharacter = gameObject;
         }
@@ -35,21 +40,24 @@ namespace Script.Role
         public void TakeDamage(float damage)
         {
             _health -= damage;
-            animationStateChanger.ChangeAnimationState(takeDamageAnimationStateName);
+
+            if (takeDamageAnimationStateName != null)
+            {
+                animationStateChanger.ChangeAnimationState(takeDamageAnimationStateName);
+            }
+
+            OnHealthChanged?.Invoke(_health);
+
             if (_health <= 0)
             {
                 Die();
             }
         }
 
-        // Consume energy
-        public void ConsumeEnergy(float energy)
+        public void ResetMovement()
         {
-            _energy -= energy;
-            if (_energy <= 0)
-            {
-                // Disable skills
-            }
+            Vector3 moveDirection = Vector3.zero;
+            new MoveCommand(move, moveDirection, false).Execute();
         }
     }
 }

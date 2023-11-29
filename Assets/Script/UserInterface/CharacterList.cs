@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Script.ActionSystem;
+using Script.Role;
 using UnityEngine;
 
 namespace Script.UserInterface
@@ -17,6 +18,9 @@ namespace Script.UserInterface
 
         private SwitchObject _switchObject;
         private List<GameObject> _switchableObjects;
+
+        // track the subscription
+        private List<(Character character, UnityEngine.UI.Text textComponent)> subscriptions = new List<(Character, UnityEngine.UI.Text)>();
 
         private void Awake()
         {
@@ -47,12 +51,41 @@ namespace Script.UserInterface
                 rectTransform.anchoredPosition = initPosition;
                 initPosition.y -= rectTransform.rect.height + offsetY;
 
-                // Set text
-                instance.GetComponentInChildren<UnityEngine.UI.Text>().text = item.name;
+                // Get the character component
+                Character characterComponent = item.GetComponent<Character>();
+
+                // Set text with character name and initial health
+                UnityEngine.UI.Text textComponent = instance.GetComponentInChildren<UnityEngine.UI.Text>();
+                textComponent.text = item.name + "\n" + characterComponent.Health;
+
+                // Subscribe to the OnHealthChanged event
+                characterComponent.OnHealthChanged += (newHealth) =>
+                {
+                    textComponent.text = item.name + "\n" + newHealth;
+                };
+
+                // Store the subscription
+                subscriptions.Add((characterComponent, textComponent));
 
                 // Add listener
                 instance.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => _switchObject.SwitchTo(item));
             }
         }
+
+        private void OnDestroy()
+        {
+            foreach (var (character, textComponent) in subscriptions)
+            {
+                if (character != null)
+                {
+                    character.OnHealthChanged -= (newHealth) =>
+                    {
+                        textComponent.text = character.name + "\n" + newHealth;
+                    };
+                }
+            }
+        }
+
+
     }
 }

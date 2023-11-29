@@ -9,14 +9,13 @@ namespace Script.InputControl
     {
         public bool EnablePlayerControl;
 
-        // Movement
+        [Header("Movement")]
         public bool EnableMovement;
+        public bool EnableVerticalMovement = false;
         public Movement _move;
         public Vector3 _moveDirection;
 
-        public bool EnableVerticalMovement = false;
-
-        // Jump
+        [Header("Jump")]
         public bool EnableJump;
         [CanBeNull] public Jump _jump;
 

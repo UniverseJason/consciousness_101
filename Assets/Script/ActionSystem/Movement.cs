@@ -7,6 +7,13 @@ namespace Script.ActionSystem
     public class Movement : MonoBehaviour
     {
         [SerializeField] private float moveSpeed;
+
+        public float MoveSpeed
+        {
+            get => moveSpeed;
+            set => moveSpeed = value;
+        }
+
         [SerializeField] private float runSpeed;
 
         // movement animation state
@@ -63,7 +70,7 @@ namespace Script.ActionSystem
             {
                 animationStateChanger.ChangeAnimationState(animationRunStateName);
             }
-            else if (v3.magnitude > 0.1)
+            else if (v3.magnitude > 0.3)
             {
                 animationStateChanger.ChangeAnimationState(animationMoveStateName);
             }

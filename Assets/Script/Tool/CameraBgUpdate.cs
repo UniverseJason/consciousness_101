@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraBgUpdate : MonoBehaviour
+namespace Script.Tool
 {
-    // Start is called before the first frame update
-    void Start()
+    public class CameraBgUpdate : MonoBehaviour
     {
-        
-    }
+        public Transform FarBackground, MiddleBackground;
+        private Vector3 previousCameraLocation;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            previousCameraLocation = transform.position;
+        }
+
+        private void Update()
+        {
+            Vector2 moveAmount = new Vector2(transform.position.x - previousCameraLocation.x, transform.position.y - previousCameraLocation.y);
+            FarBackground.position += new Vector3(moveAmount.x, moveAmount.y, 0);
+            MiddleBackground.position += new Vector3(moveAmount.x, moveAmount.y, 0) * 0.5f;
+            previousCameraLocation = transform.position;
+        }
     }
 }
