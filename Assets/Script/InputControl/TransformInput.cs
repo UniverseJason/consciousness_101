@@ -30,7 +30,6 @@ namespace Script.InputControl
             if (EnablePlayerControl)
             {
                 if (EnableMovement) HandleMovementInput();
-
                 if (EnableJump) HandleJumpInput();
             }
         }
@@ -68,7 +67,7 @@ namespace Script.InputControl
 
         private void HandleJumpInput()
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 new JumpCommand(_jump).Execute();
             }

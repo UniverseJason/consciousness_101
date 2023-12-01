@@ -30,7 +30,6 @@ namespace Script.AISystem.SmallEnemyAI
         [Header("Enemy Take Damage")]
         [SerializeField] private string takeDamageAnimationStateName;
 
-
         private void Start()
         {
             move = GetComponent<Movement>();

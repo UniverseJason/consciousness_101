@@ -24,7 +24,7 @@ namespace Script.UserInterface
         public void ShowMenu()
         {
             StopAllCoroutines();
-            Vector3 targetPosition = isPaused ? new Vector3(0, 0, 0) : new Vector3(0, -1000, 0);
+            Vector3 targetPosition = isPaused ? new Vector3(0, 500, 0) : new Vector3(0, -1000, 0);
             StartCoroutine(MoveMenu(pauseMenu, targetPosition, 0.5f));
         }
 

@@ -5,23 +5,31 @@ namespace Script.TokenAction
     {
         public Transform Target;
 
-        public float _followSpeed = 1.5f;
-        public float _stoppingDistance = 0.7f;
+        public float followSpeed = 1.5f;
+        public float stoppingDistance = 0.7f;
 
-        public float _offsetX = 0f; // Offset in the X direction
-        public float _offsetY = 0.3f; // Offset in the Y direction
+        public float offsetX = 0f; // Offset in the X direction
+        public float offsetY = 0.3f; // Offset in the Y direction
+
+        public bool enableVerticalMovementOnly = false;
+        public bool enableHorizontalMovementOnly = false;
 
         public void FollowTarget()
         {
             if(Target != null)
             {
-                Vector3 desiredPosition = Target.position + new Vector3(_offsetX, _offsetY, 0);
-                float distance = Vector3.Distance(transform.position, desiredPosition);
+                // If vertical-only movement is enabled, keep the current x position.
+                float targetX = enableVerticalMovementOnly ? transform.position.x : Target.position.x + offsetX;
 
-                if(distance > _stoppingDistance)
-                {
-                    transform.position = Vector3.Lerp(transform.position, desiredPosition, _followSpeed * Time.deltaTime);
-                }
+                // If horizontal-only movement is enabled, keep the current y position.
+                float targetY = enableHorizontalMovementOnly ? transform.position.y : Target.position.y + offsetY;
+
+                Vector3 desiredPosition = new Vector3(targetX, targetY, 0);
+
+                float distance = Vector3.Distance(transform.position, desiredPosition);
+                if (distance < stoppingDistance) return;
+
+                transform.position = Vector3.Lerp(transform.position, desiredPosition, followSpeed * Time.deltaTime);
             }
         }
     }

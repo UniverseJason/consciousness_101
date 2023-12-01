@@ -7,7 +7,7 @@ namespace Script.UserInterface
     {
         public void PlayGame()
         {
-            SceneManager.LoadScene("Scenes/BaseScene");
+            SceneManager.LoadScene("Scenes/Level");
         }
 
         public void QuitGame()

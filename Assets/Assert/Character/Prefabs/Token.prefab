@@ -12,11 +12,14 @@ GameObject:
   - component: {fileID: 2176859422878703538}
   - component: {fileID: 465679387241669861}
   - component: {fileID: 8765359577308897654}
-  - component: {fileID: 7193682240197930605}
-  - component: {fileID: 960643366525949157}
+  - component: {fileID: 6588393910104433487}
+  - component: {fileID: 3735995943807238384}
+  - component: {fileID: 4212701947646559754}
   - component: {fileID: 991668444286790636}
-  - component: {fileID: 6729041452891790446}
   - component: {fileID: 8720513319882287598}
+  - component: {fileID: 6729041452891790446}
+  - component: {fileID: 884964875208821845}
+  - component: {fileID: 377322593762501673}
   m_Layer: 6
   m_Name: Token
   m_TagString: Player
@@ -34,7 +37,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.738, y: -1.433, z: -0.013248073}
-  m_LocalScale: {x: 1, y: 1, z: 0}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5044413220464964803}
@@ -148,13 +151,34 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.15
---- !u!114 &7193682240197930605
+--- !u!95 &6588393910104433487
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934345775381287466}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 70e33c20577167c41ab45a8866884834, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3735995943807238384
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -163,14 +187,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4934345775381287466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10fe67c60aed4985846ac78f4d8aad05, type: 3}
+  m_Script: {fileID: 11500000, guid: 24f8291e78484301ae22a917701ccdf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnableSkill: 1
-  EnableFollow: 1
-  EnableAttack: 1
-  characterListUIController: {fileID: 0}
---- !u!114 &960643366525949157
+  animator: {fileID: 6588393910104433487}
+  animationCurrentState: 
+--- !u!114 &4212701947646559754
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,13 +201,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 4934345775381287466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 095bfa3b64954efaab04ac272458b0a6, type: 3}
+  m_Script: {fileID: 11500000, guid: 6177564b149940b5b388b8c4de0901a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OriginPosition: {x: 0, y: 0, z: 0}
-  TargetPosition: {x: 0, y: 0, z: 0}
-  AttackRange: 10
-  AttackSpeed: 20
+  _health: 100
+  takeDamageAnimationStateName: 
 --- !u!114 &991668444286790636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,29 +219,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
-  _followSpeed: 1.5
+  _followSpeed: 3
   _stoppingDistance: 0.7
   _offsetX: 0
   _offsetY: 0.3
---- !u!114 &6729041452891790446
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4934345775381287466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5bd884892f9cbf43b326470f8cd987b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  EnablePlayerControl: 0
-  EnableMovement: 1
-  _move: {fileID: 8720513319882287598}
-  _moveDirection: {x: 0, y: 0, z: 0}
-  EnableVerticalMovement: 1
-  EnableJump: 0
-  _jump: {fileID: 0}
 --- !u!114 &8720513319882287598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,9 +239,65 @@ MonoBehaviour:
   runSpeed: 3
   EnableAnimation: 0
   animationStateChanger: {fileID: 0}
-  animationDefaultStateName: null
-  animationMoveStateName: null
+  animationDefaultStateName: Token Idle
+  animationMoveStateName: Token Idle
   animationRunStateName: null
+--- !u!114 &6729041452891790446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934345775381287466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bd884892f9cbf43b326470f8cd987b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnablePlayerControl: 0
+  EnableMovement: 1
+  EnableVerticalMovement: 1
+  _move: {fileID: 8720513319882287598}
+  _moveDirection: {x: 0, y: 0, z: 0}
+  EnableJump: 0
+  _jump: {fileID: 0}
+--- !u!114 &884964875208821845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934345775381287466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cd78c2089de4ce98cb42e0c0786d1f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
+  teamMembers:
+  - {fileID: 0}
+  - {fileID: 0}
+  healAmount: 10
+--- !u!114 &377322593762501673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4934345775381287466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18b42441cc8244cd940a12ac296345da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterListUIController: {fileID: 0}
+  detectRange: 5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  detectionCooldown: 0.3
+  skillCooldown: 20
+  skillTimer: 20
 --- !u!1 &5082886658762022603
 GameObject:
   m_ObjectHideFlags: 0

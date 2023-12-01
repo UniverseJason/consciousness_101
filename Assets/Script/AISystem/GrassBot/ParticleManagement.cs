@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Script.Role;
+using UnityEngine;
 
 namespace Script.AISystem.GrassBot
 {
@@ -9,18 +10,30 @@ namespace Script.AISystem.GrassBot
         public ParticleSystem Attack1Particle;
         public ParticleSystem Attack2Particle;
 
-        public void ParticleSwitch(ParticleSystem p)
+        public void SwitchToParticle(ParticleSystem p)
         {
+            if (p.isPlaying) return;
             StopAllParticle();
             p.Play();
         }
 
         public void StopAllParticle()
         {
-            IdleParticle.Stop();
-            MoveParticle.Stop();
-            Attack1Particle.Stop();
-            Attack2Particle.Stop();
+            StopParticle(IdleParticle);
+            StopParticle(MoveParticle);
+            StopParticle(Attack1Particle);
+            StopParticle(Attack2Particle);
+        }
+
+        private void StopParticle(ParticleSystem p)
+        {
+            if (p.isPlaying) p.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+
+        public void PlayParticle(ParticleSystem p)
+        {
+            if (p.isPlaying) return;
+            p.Play();
         }
     }
 }

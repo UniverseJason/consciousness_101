@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Script.Music;
+using UnityEngine;
 
 namespace Script.AISystem.SmallEnemyAI
 {
@@ -15,9 +16,12 @@ namespace Script.AISystem.SmallEnemyAI
         private Collider2D[] hitColliders = new Collider2D[10];
         private float detectionTimer = 0f;
 
+        private AudioManager audioManager;
+
         private void Start()
         {
             State = GetComponent<State>();
+            audioManager = GetComponent<AudioManager>();
         }
 
         private void Update()
@@ -38,6 +42,7 @@ namespace Script.AISystem.SmallEnemyAI
             if (IsPlayerInAttackRange())
             {
                 State.currentState = State.AIState.Attack;
+                audioManager.SmoothChangeTo("FightV");
             }
             else if (isPlayerDetected)
             {
